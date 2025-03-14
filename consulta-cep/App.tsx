@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
+
 type Address = {
 
   logradouro: string;
@@ -15,9 +16,6 @@ type Address = {
 
 }
 
-const [address, setAddress] = useState<Address | null>(null);
-
-const [error, setError] = useState('');
 
 const styles = StyleSheet.create({
 
@@ -77,46 +75,51 @@ const styles = StyleSheet.create({
 });
 
 
-const fetchAddress = async () => {
 
-  setError('');
-
-  setAddress(null);
-
-
-  if (cep.length !== 8) {
-
-    setError('CEP inválido. Deve conter 8 dígitos.');
-
-    return;
-
-  }
-
-
-  try {
-
-    const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-
-    if (response.data.erro) {
-
-      setError('CEP não encontrado.');
-
-    } else {
-
-      setAddress(response.data);
-
-    }
-
-  } catch (error) {
-
-    setError('Erro ao buscar CEP. Verifique sua conexão.');
-
-  }
-
-};
 const App: React.FC = () => {
 
   const [cep, setCep] = useState('');
+  const [address, setAddress] = useState<Address | null>(null);
+
+  const [error, setError] = useState('');
+
+  const fetchAddress = async () => {
+
+    setError('');
+
+    setAddress(null);
+
+
+    if (cep.length !== 8) {
+
+      setError('CEP inválido. Deve conter 8 dígitos.');
+
+      return;
+
+    }
+
+
+    try {
+
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+      if (response.data.erro) {
+
+        setError('CEP não encontrado.');
+
+      } else {
+
+        setAddress(response.data);
+
+      }
+
+    } catch (error) {
+
+      setError('Erro ao buscar CEP. Verifique sua conexão.');
+
+    }
+
+  };
 
 
   return (
