@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
 
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
 
   const [cep, setCep] = useState('');
   const [address, setAddress] = useState<Address | null>(null);
